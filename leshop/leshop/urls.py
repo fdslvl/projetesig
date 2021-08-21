@@ -16,9 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from apps.core import homepage
+from apps.core.views import homepage, contact
 
 urlpatterns = [
     path('', homepage, name='homepage'),
+    path('contact/', contact, name='contact'),
     path('admin/', admin.site.urls),
 ]

@@ -4,3 +4,6 @@ from django.shortcuts import render
 
 def homepage(request):  # Permet de rendre la page html
     return render(request, 'homepage.html')
+
+def contact(request):
+    return render(request, 'contact.html')
