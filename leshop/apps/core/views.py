@@ -15,3 +15,6 @@ def homepage(request):  # Permet de rendre la page html
 
 def contact(request):
     return render(request, 'contact.html')
+
+def apropos(request):
+    return render(request, 'apropos.html')
