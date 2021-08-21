@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% block nom %} {{ produit.nom }} | {% endblock %}
+
 {% block content %}
     <h1 class="title">{{ produit.nom }}</h1>
     <h2 class="subtitle">CHF {{ produit.prix }}</h2>

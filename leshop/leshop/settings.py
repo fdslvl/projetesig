@@ -40,8 +40,10 @@ INSTALLED_APPS = [
 
     #MesAPPS
 
+    'apps.panier',
     'apps.core',
     'apps.store'
+
 ]
 
 MIDDLEWARE = [

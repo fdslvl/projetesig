@@ -16,14 +16,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from apps.panier.views import panier
 from apps.core.views import homepage, contact, apropos
 from apps.store.views import produit_detail, categorie_detail
 
 urlpatterns = [
     path('', homepage, name='homepage'),
+    path('panier/', panier, name='panier'),
     path('contact/', contact, name='contact'),
     path('apropos/', apropos, name='apropos'),
      path('admin/', admin.site.urls),
-    path('<slug:categorie_slug>/<slug:slug>/', produit_detail,  name="produit_detail"),
-    path('<slug:slug>/', categorie_detail,  name="categorie_detail"),
+    path('<slug:categorie_slug>/<slug:slug>/', produit_detail,  name='produit_detail'),
+    path('<slug:slug>/', categorie_detail,  name='categorie_detail'),
 ]

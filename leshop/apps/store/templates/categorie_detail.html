@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% block nom %} {{ categorie.nom }} | {% endblock %}
+
 {% block content %}
     <h1 class="title">{{ categorie.nom }}</h1>
 
