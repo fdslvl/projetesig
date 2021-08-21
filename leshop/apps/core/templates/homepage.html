@@ -16,7 +16,7 @@
                 </div>
 
                 <footer class="card-footer">
-                    <a href="{% url 'produit_detail' produit.slug %}" class="card-footer-item">Voir</a>
+                    <a href="{% url 'produit_detail' produit.categorie.slug produit.slug %}" class="card-footer-item">Voir</a>
                 </footer>
             </div>
 
