@@ -4,15 +4,15 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>LeShop</title>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
-    </head>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css"> <!-- framework javascript : bulma -->
+        </head>
 
     <body>
         <nav class="navbar">
             <div class="navbar-brand">
-                <a class="navbar-item" href="/"> LESHOP </a>
+                <a class="navbar-item" href="/"> LESHOP </a> <!-- Logo -->
 
-                <a role="button" class="navbar-burger burger"  aria-label="menu" aria-expanded="false" data-target="main-navbar">
+                <a role="button" class="navbar-burger burger"  aria-label="menu" aria-expanded="false" data-target="main-navbar"> <!-- menu "burger" pour téléphones -->
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>
@@ -27,7 +27,7 @@
         </nav>
 
         <section class="section">
-            {% block content %}
+            {% block content %}  <!-- template django -->
             {% endblock %}
         </section>
     </body>
