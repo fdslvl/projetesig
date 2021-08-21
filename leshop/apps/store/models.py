@@ -19,6 +19,7 @@ class Produit(models.Model):
     slug = models.SlugField(max_length=255) # Slug = terme pour désigner le string en fin d'un URL qui permet l'identification
     description = models.TextField(blank=True,  null=True)
     prix = models.FloatField()
+    vedette = models.BooleanField(default=False) # Attribut qui permet de définir quel produit est vedette et sera placé en homepage
     date_added = models.DateTimeField(auto_now_add=True) #Trie le produit par date lorsqu'il est ajouté
 
     class Meta:
