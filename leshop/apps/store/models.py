@@ -5,6 +5,10 @@ from django.db import models
 class Categorie(models.Model):
     nom = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255)
+    ordre = models.IntegerField(default=0) #Permettre de trier par ordre numérique les catégories
+
+    class Meta:
+        ordering= ('ordre',)
 
     def __str__(self): #Dans la partie admin, montre directement le nom des catégories
         return self.nom
@@ -15,6 +19,10 @@ class Produit(models.Model):
     slug = models.SlugField(max_length=255) # Slug = terme pour désigner le string en fin d'un URL qui permet l'identification
     description = models.TextField(blank=True,  null=True)
     prix = models.FloatField()
+    date_added = models.DateTimeField(auto_now_add=True) #Trie le produit par date lorsqu'il est ajouté
+
+    class Meta:
+        ordering = ('-date_added',) # Ici le '-' nous sert à trier de la date la plus récente
 
     def __str__(self): 
         return self.nom
