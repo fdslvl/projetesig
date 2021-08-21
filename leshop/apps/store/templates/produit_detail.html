@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1 class="title">{{ produit.nom }}</h1>
+    <h2 class="subtitle">CHF {{ produit.prix }}</h2>
+
+    {% if produit.description %} <!-- Si le produit a une description, l'afficher -->
+        <p>{{ produit.description }}</p>
+    {% endif %}
+{% endblock %}

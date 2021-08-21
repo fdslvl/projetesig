@@ -12,7 +12,7 @@ class Categorie(models.Model):
 class Produit(models.Model):
     categorie = models.ForeignKey(Categorie, related_name='produits', on_delete=models.CASCADE) #Pour pouvoir avoir tous les produits d'une categorie, et que lorsque je supprime cette dernière tous les produits soient effacés
     nom = models.CharField(max_length=255)
-    slug = models.SlugField(max_length=255)
+    slug = models.SlugField(max_length=255) # Slug = terme pour désigner le string en fin d'un URL qui permet l'identification
     description = models.TextField(blank=True,  null=True)
     prix = models.FloatField()
 
