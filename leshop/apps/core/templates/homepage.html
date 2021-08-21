@@ -1,5 +1,26 @@
 {% extends 'base.html' %} <!-- Récupération du template base.html -->
 
 {% block content %} 
-    <h1 class="title">Home</h1>
+
+<div class="columns is-multiline">
+    {% for produit in produits %}
+        <div class="column is-3">
+            <div class="card">
+                <div class="card-content">
+                    <div class="media">
+                        <div class="media-content">
+                            <p class="title is-4">{{ produit.nom }}</p>
+                            <p class="subtitle is-6">CHF {{ produit.prix }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="card-footer">
+                    <a href="#" class="card-footer-item">Voir</a>
+                </footer>
+            </div>
+
+        </div>
+    {% endfor %}
+</div>
 {% endblock %}
