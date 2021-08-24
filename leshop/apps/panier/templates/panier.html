@@ -38,6 +38,7 @@
     var produitapp = new Vue({
         el: '#panierapp',
         delimiters: ['[[',']]'],
+        store: store,
         data () {
             return {
                 produits: [{{ produitstring | safe }}]
@@ -52,6 +53,8 @@
                     'update': true,
                     'quantite': parseInt(quantite) + 1
                 };
+
+                store.commit('increment', 1);
 
                 fetch('/api/ajouter_au_panier/', {
                     method: 'POST',

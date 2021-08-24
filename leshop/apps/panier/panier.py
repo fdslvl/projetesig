@@ -52,3 +52,6 @@ class Panier(object):
     def save(self):
         self.session[settings.CART_SESSION_ID] = self.panier # Mise à jour de la session
         self.session.modified = True # Le navigateur sait que la session est modifiée
+
+    def get_total_length(self): # Récupère le nombre d'éléments dans le panier
+        return sum(int(item['quantite']) for item in self.panier.values())

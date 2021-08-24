@@ -74,6 +74,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'apps.store.context_processors.menu_categories',
+                'apps.panier.context_processors.panier',
             ],
         },
     },
