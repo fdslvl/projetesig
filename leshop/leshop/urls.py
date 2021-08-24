@@ -16,16 +16,26 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from apps.panier.views import panier
+from apps.panier.views import panier_detail
 from apps.core.views import homepage, contact, apropos
 from apps.store.views import produit_detail, categorie_detail
 
+from apps.store.api import api_ajouter_au_panier
+
 urlpatterns = [
     path('', homepage, name='homepage'),
-    path('panier/', panier, name='panier'),
+    path('panier/', panier_detail, name='panier'),
     path('contact/', contact, name='contact'),
     path('apropos/', apropos, name='apropos'),
-     path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls),
+
+    # API
+
+    path('api/ajouter_au_panier/', api_ajouter_au_panier, name= 'api_ajouter_au_panier'),
+
+
+    # Store
+
     path('<slug:categorie_slug>/<slug:slug>/', produit_detail,  name='produit_detail'),
     path('<slug:slug>/', categorie_detail,  name='categorie_detail'),
 ]

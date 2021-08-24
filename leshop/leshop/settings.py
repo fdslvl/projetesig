@@ -27,6 +27,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# Panier
+
+SESSION_COOKIE_AGE = 86400 #Quand un produit est ajouté à mon panier il y restera cette durée en secondes (24h)
+CART_SESSION_ID = 'panier'
 
 # Application definition
 
