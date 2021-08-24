@@ -47,7 +47,8 @@ INSTALLED_APPS = [
 
     'apps.panier',
     'apps.core',
-    'apps.store'
+    'apps.store',
+    'apps.commande',
 
 ]
 
