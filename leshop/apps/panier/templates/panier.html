@@ -34,6 +34,56 @@
                 </tfoot>
             </table>
         </div>
+
+        <from v-on:submit.prevent="submitForm()">
+            <div class="field">
+                <div cass="control">
+                    <label>Prénom</label>
+                    <input type="text" name="prenom" v-model="prenom">
+                </div>
+            </div>
+
+            <div class="field">
+                <div cass="control">
+                    <label>Nom</label>
+                    <input type="text" name="nom" v-model="nom">
+                </div>
+            </div>
+
+            <div class="field">
+                <div cass="control">
+                    <label>Email</label>
+                    <input type="text" name="email" v-model="email">
+                </div>
+            </div>
+
+            <div class="field">
+                <div cass="control">
+                    <label>Adresse</label>
+                    <input type="text" name="adresse" v-model="adresse">
+                </div>
+            </div>
+
+            <div class="field">
+                <div cass="control">
+                    <label>Code Postal</label>
+                    <input type="text" name="npa" v-model="npa">
+                </div>
+            </div>
+
+            <div class="field">
+                <div cass="control">
+                    <label>Localité</label>
+                    <input type="text" name="localite" v-model="localite">
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <button class="button is-primary">Payer</button>
+                </div>
+            </div>
+        </from>
             
         {% else %}
             <p>Votre panier est vide.</p>
@@ -49,6 +99,12 @@
         store: store,
         data () {
             return {
+                prenom: '',
+                nom:'',
+                email:'',
+                adresse:'',
+                npa:'',
+                localite:'',
                 produits: [{{ produitstring | safe }}]
             }
         },
@@ -61,6 +117,34 @@
             }
         },
         methods: {
+            submitForm(){
+                console.log('Submit form');
+
+                var data = {
+                    'prenom' : this.prenom,
+                    'nom' : this.nom,
+                    'email' : this.email,
+                    'adresse' : this.adresse,
+                    'npa' : this.npa,
+                    'localite' : this.localite,
+                }; 
+                fetch('/api/payer/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type' : 'application/json',
+                        'X-CSRFToken' : '{{ csrf_token }}'
+                    },
+                    credentials: 'same-origin',
+                    body: JSON.stringify(data)
+                })
+                .then((response) => {
+                    console.log('Success');
+                    console.log(response);
+                })
+                .catch(function (error){
+                    console.log('Error 2');
+                })   
+            },
             incrementQuantite(produit_id, quantite, prix){
                 console.log('Produit_id:', produit_id);
 

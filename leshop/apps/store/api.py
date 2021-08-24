@@ -1,10 +1,39 @@
 import json
 from django.http import JsonResponse
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 
 from apps.panier.panier import Panier
 
 from .models import Produit
+from apps.commande.utils import payer
+
+
+from apps.commande.models import Commande, CommandeItem
+
+def api_payer(request):
+    panier = Panier(request)
+    data = json.loads(request.body)
+    jsonresponse = {'success' : True}
+    prenom = data['prenom']
+    nom = data['nom']
+    email = data['email']
+    adresse = data['adresse']
+    npa = data['npa']
+    localite = data['localite']
+
+    commandeid = payer(request, prenom, nom , email, adresse, npa , localite)
+
+    paye = True
+
+    if paye == True:
+        commande = Commande.objects.get(pk=commandeid)
+        commande.paye = True
+        commande.montant_paye = panier.get_prix_total()
+        commande.save()
+
+        panier.clear()
+
+    return redirect('/') #Redirige le client à la page d'accueil
 
 def api_ajouter_au_panier(request):
     data = json.loads(request.body)

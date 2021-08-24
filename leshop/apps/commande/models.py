@@ -5,8 +5,8 @@ from apps.store.models import Produit
 # Create your models here.
 
 class Commande(models.Model):
-    premier_nom = models.CharField(max_length=100)
-    dernier_nom = models.CharField(max_length=100)
+    prenom = models.CharField(max_length=100)
+    nom = models.CharField(max_length=100)
     email = models.CharField(max_length=100)
     adresse= models.CharField(max_length=100)
     npa = models.CharField(max_length=100)
@@ -18,7 +18,7 @@ class Commande(models.Model):
     montant_paye = models.FloatField(blank=True, null=True)
 
     def __str__(self):
-        return '%s' % self.premier_nom
+        return '%s' % self.prenom
 
 class CommandeItem(models.Model):
     commande = models.ForeignKey(Commande, related_name='items', on_delete=models.CASCADE)
