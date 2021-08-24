@@ -20,7 +20,7 @@ from apps.panier.views import panier_detail
 from apps.core.views import homepage, contact, apropos
 from apps.store.views import produit_detail, categorie_detail
 
-from apps.store.api import api_ajouter_au_panier
+from apps.store.api import api_ajouter_au_panier, api_retirer_du_panier
 
 urlpatterns = [
     path('', homepage, name='homepage'),
@@ -32,6 +32,7 @@ urlpatterns = [
     # API
 
     path('api/ajouter_au_panier/', api_ajouter_au_panier, name= 'api_ajouter_au_panier'),
+    path('api/retirer_du_panier/', api_retirer_du_panier, name= 'api_retirer_du_panier'),
 
 
     # Store

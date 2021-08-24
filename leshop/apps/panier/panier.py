@@ -44,6 +44,11 @@ class Panier(object):
 
         self.save()
 
+    def retirer(self, produit_id): # Suppression du produit du panier
+        if produit_id in self.panier: 
+            del self.panier[produit_id]
+            self.save()
+
     def save(self):
         self.session[settings.CART_SESSION_ID] = self.panier # Mise à jour de la session
         self.session.modified = True # Le navigateur sait que la session est modifiée

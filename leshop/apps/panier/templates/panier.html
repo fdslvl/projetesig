@@ -3,15 +3,60 @@
 {% block nom %} Panier | {% endblock %}
 
 {% block content %}
-    <h1 class="title">Panier</h1>
+    <div id="panierapp">
+        <h1 class="title">Panier</h1>
 
-    {% if panier %}
-        {% for item in panier %}
-            {% with produit=item.produit %}
-                <p>Produit - {{ produit.nom }}</p>
-            {% endwith %}
-        {% endfor %}
-    {% else %}
-        <p>Votre panier est vide.</p>
-    {% endif %}
+        {% if panier %}
+            {% for item in panier %}
+                {% with produit=item.produit %}
+                    <p>{{ produit.nom }}</p>
+                    <button @click="retirerDuPanier({{ produit.id }})">Supprimer du panier</button>
+                {% endwith %}
+            {% endfor %}
+        {% else %}
+            <p>Votre panier est vide.</p>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    var produitapp = new Vue({
+        el: '#panierapp',
+        delimeters: ['[[',']]'],
+        data () {
+            return {
+
+            }
+        },
+        mounted() {
+            console.log('Mounted');
+        },
+        methods: {
+            retirerDuPanier(produit_id){
+                console.log('Produit_id:', produit_id);
+
+                var data = {
+                    'produit_id': produit_id
+                };
+
+                fetch('/api/retirer_du_panier/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type' : 'application/json',
+                        'X-CSRFToken' : '{{ csrf_token }}'
+                    },
+                    credentials: 'same-origin',
+                    body: JSON.stringify(data)
+                })
+                .then((response) => {
+                    console.log(response)
+                })
+                .catch(function (error){
+                    console.log('Error 2');
+                })
+            }
+        }
+    })
+</script>
 {% endblock %}

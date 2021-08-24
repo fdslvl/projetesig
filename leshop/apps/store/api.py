@@ -24,3 +24,12 @@ def api_ajouter_au_panier(request):
 
     return JsonResponse(jsonresponse)
 
+def api_retirer_du_panier(request):
+    data = json.loads(request.body)
+    jsonresponse = {'success' : True}
+    produit_id = str(data['produit_id']) # Récupération de l'id produit
+
+    panier = Panier(request)
+    panier.retirer(produit_id)
+
+    return JsonResponse(jsonresponse)
