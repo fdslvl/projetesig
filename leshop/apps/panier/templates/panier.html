@@ -19,7 +19,7 @@
                 <tbody>
                     <tr v-for="produit in produits">
                         <td>[[ produit.nom ]]</td>
-                        <td>[[ produit.quantite ]] <button @click="incrementQuantite(produit.id, produit.quantite)">+</button></td>
+                        <td><button @click="decrementQuantite(produit.id, produit.quantite, produit.prix)">-</button>[[ produit.quantite ]] <button @click="incrementQuantite(produit.id, produit.quantite,  produit.prix)">+</button></td>
                         <td> [[ produit.prix_total ]]</td>
                         <td><button @click="retirerDuPanier(produit.id)">Supprimer du panier</button></td>
                     </tr>
@@ -27,9 +27,9 @@
                 <tfoot>
                     <tr>
                         <td>Coût total:</td>
-                        <td>{{ panier.get_total_length }}</td>
+                        <td>[[ numItems ]]</td>
                         <td></td>
-                        <td>{{ panier.get_total_cost }}</td>
+                        <td>[[ prixTotal ]]</td>
                     </tr>
                 </tfoot>
             </table>
@@ -52,8 +52,16 @@
                 produits: [{{ produitstring | safe }}]
             }
         },
+        computed: {
+            numItems: function() {
+                return store.state.numItems
+            },
+            prixTotal: function() {
+                return store.state.prixTotal
+            }
+        },
         methods: {
-            incrementQuantite(produit_id, quantite){
+            incrementQuantite(produit_id, quantite, prix){
                 console.log('Produit_id:', produit_id);
 
                 var data = {
@@ -63,6 +71,7 @@
                 };
 
                 store.commit('increment', 1);
+                store.commit('changePrixTotal', parseFloat(prix));
 
                 fetch('/api/ajouter_au_panier/', {
                     method: 'POST',
@@ -81,6 +90,44 @@
                         
                         if  (produit.id === produit_id) { 
                             this.produits[i].quantite = parseInt(this.produits[i].quantite) + 1;   /* Update la quantité en direct */
+                            this.produits[i].prix_total = parseInt(this.produits[i].quantite) * parseFloat(this.produits[i].prix); /* Update le prix total en direct*/
+                        }
+                    }
+
+                })
+                .catch(function (error){
+                    console.log('Error 2');
+                })
+            },
+            decrementQuantite(produit_id, quantite, prix){
+                console.log('Produit_id:', produit_id);
+
+                var data = {
+                    'produit_id': produit_id, 
+                    'update': true,
+                    'quantite': parseInt(quantite) - 1
+                };
+
+                store.commit('increment', -1);
+                store.commit('changePrixTotal', -parseFloat(prix));
+
+                fetch('/api/ajouter_au_panier/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type' : 'application/json',
+                        'X-CSRFToken' : '{{ csrf_token }}'
+                    },
+                    credentials: 'same-origin',
+                    body: JSON.stringify(data)
+                })
+                .then((response) => {
+                    console.log(response)
+                    
+                    for (var i = 0; i < this.produits.length; i++){
+                        var produit = this.produits[i];
+                        
+                        if  (produit.id === produit_id) { 
+                            this.produits[i].quantite = parseInt(this.produits[i].quantite) - 1;   /* Update la quantité en direct */
                             this.produits[i].prix_total = parseInt(this.produits[i].quantite) * parseFloat(this.produits[i].prix); /* Update le prix total en direct*/
                         }
                     }
