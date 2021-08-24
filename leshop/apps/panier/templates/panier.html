@@ -7,12 +7,30 @@
         <h1 class="title">Panier</h1>
 
         {% if panier %}
-            {% for item in panier %}
-                {% with produit=item.produit %}
-                    <p>{{ produit.nom }}</p>
-                    <button @click="retirerDuPanier({{ produit.id }})">Supprimer du panier</button>
-                {% endwith %}
-            {% endfor %}
+        <div class="table">
+            <table class="table">
+                <thead>
+                    <th>Produit</th>
+                    <th>Quantité</th>
+                    <th>Prix</th>
+                    <th></th>
+                </thead>
+
+                <tbody>
+                    {% for item in panier %}
+                        {% with produit=item.produit %}
+                            <tr>
+                                <td>{{ produit.nom }}</td>
+                                <td>{{ item.quantite }}</td>
+                                <td>{{ item.prix_total}}</td>
+                                <td><button @click="retirerDuPanier({{ produit.id }})">Supprimer du panier</button></td>
+                            </tr>
+                        {% endwith %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+            
         {% else %}
             <p>Votre panier est vide.</p>
         {% endif %}

@@ -23,7 +23,7 @@ class Panier(object):
             self.panier[str(p)] ['produit'] = Produit.objects.get(pk=p)
 
         for item in self.panier.values():
-            item['prix_total'] = int(item['prix']) * int(item['quantite'])
+            item['prix_total'] = float(item['prix']) * int(item['quantite'])
 
             yield item
 
