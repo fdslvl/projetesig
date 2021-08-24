@@ -55,3 +55,6 @@ class Panier(object):
 
     def get_total_length(self): # Récupère le nombre d'éléments dans le panier
         return sum(int(item['quantite']) for item in self.panier.values())
+
+    def get_total_cost(self):
+        return sum(float(item['prix_total']) for item in self.panier.values())
