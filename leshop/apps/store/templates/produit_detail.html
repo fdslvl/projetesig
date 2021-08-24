@@ -4,6 +4,8 @@
 
 {% block content %}
     <div id="produitapp">
+        <img src="/{{ produit.image }}">
+        <hr>
         <h1 class="title">{{ produit.nom }}</h1>
         <h2 class="subtitle">CHF {{ produit.prix }}</h2>
 
