@@ -1,14 +1,34 @@
 from django.conf import settings
 
+from apps.store.models import Produit
+
 class Panier(object):
     def __init__(self, request):
         self.session = request.session
-        panier = self.session.get(settings.SESSION_COOKIE_AGE) # Récupération de la session
+        panier = self.session.get(settings.CART_SESSION_ID) # Récupération de la session
 
         if not panier: # Si la session n'existe pas
             panier = self.session[settings.CART_SESSION_ID] = {}
 
         self.panier = panier
+
+    def __iter__(self):
+        produit_ids = self.panier.keys()
+
+        produit_clean_ids = []
+
+        for p in produit_ids:
+            produit_clean_ids.append(p)
+
+            self.panier[str(p)] ['produit'] = Produit.objects.get(pk=p)
+
+        for item in self.panier.values():
+            item['prix_total'] = int(item['prix']) * int(item['quantite'])
+
+            yield item
+
+    def __len__(self):
+        return sum(item['quantite'] for item in self.panier.values())
 
     def ajouter(self, produit, quantite =1, update_quantite=False): # Ajout de produit
         produit_id = str(produit.id)

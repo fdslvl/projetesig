@@ -3,10 +3,58 @@
 {% block nom %} {{ produit.nom }} | {% endblock %}
 
 {% block content %}
-    <h1 class="title">{{ produit.nom }}</h1>
-    <h2 class="subtitle">CHF {{ produit.prix }}</h2>
+    <div id="produitapp">
+        <h1 class="title">{{ produit.nom }}</h1>
+        <h2 class="subtitle">CHF {{ produit.prix }}</h2>
 
-    {% if produit.description %} <!-- Si le produit a une description, l'afficher -->
-        <p>{{ produit.description }}</p>
-    {% endif %}
+        {% if produit.description %} <!-- Si le produit a une description, l'afficher -->
+            <p>{{ produit.description }}</p>
+        {% endif %}
+
+        <button @click ="ajouterAuPanier({{produit.id}})">Ajouter au panier</button>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    var produitapp = new Vue({
+        el: '#produitapp',
+        delimeters: ['[[',']]'],
+        data () {
+            return {
+
+            }
+        },
+        mounted() {
+            console.log('Mounted');
+        },
+        methods: {
+            ajouterAuPanier(produit_id){
+                console.log('Produit_id:', produit_id);
+
+                var data = {
+                    'produit_id': produit_id, 
+                    'update': false,
+                    'quantite':1
+                };
+
+                fetch('/api/ajouter_au_panier/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type' : 'application/json',
+                        'X-CSRFToken' : '{{ csrf_token }}'
+                    },
+                    credentials: 'same-origin',
+                    body: JSON.stringify(data)
+                })
+                .then((response) => {
+                    console.log(response)
+                })
+                .catch(function (error){
+                    console.log('Error 2');
+                })
+            }
+        }
+    });
+</script>
 {% endblock %}

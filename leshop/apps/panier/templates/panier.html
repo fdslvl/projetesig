@@ -4,4 +4,14 @@
 
 {% block content %}
     <h1 class="title">Panier</h1>
+
+    {% if panier %}
+        {% for item in panier %}
+            {% with produit=item.produit %}
+                <p>Produit - {{ produit.nom }}</p>
+            {% endwith %}
+        {% endfor %}
+    {% else %}
+        <p>Votre panier est vide.</p>
+    {% endif %}
 {% endblock %}
