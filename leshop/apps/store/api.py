@@ -24,6 +24,7 @@ def api_ajouter_au_panier(request):
 
     return JsonResponse(jsonresponse)
 
+
 def api_retirer_du_panier(request):
     data = json.loads(request.body)
     jsonresponse = {'success' : True}

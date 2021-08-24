@@ -17,16 +17,12 @@
                 </thead>
 
                 <tbody>
-                    {% for item in panier %}
-                        {% with produit=item.produit %}
-                            <tr>
-                                <td>{{ produit.nom }}</td>
-                                <td>{{ item.quantite }}</td>
-                                <td>{{ item.prix_total}}</td>
-                                <td><button @click="retirerDuPanier({{ produit.id }})">Supprimer du panier</button></td>
-                            </tr>
-                        {% endwith %}
-                    {% endfor %}
+                    <tr v-for="produit in produits">
+                        <td>[[ produit.nom ]]</td>
+                        <td>[[ produit.quantite ]] <button @click="incrementQuantite(produit.id, produit.quantite)">+</button></td>
+                        <td> [[ produit.prix_total ]]</td>
+                        <td><button @click="retirerDuPanier(produit.id)">Supprimer du panier</button></td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -41,16 +37,48 @@
 <script>
     var produitapp = new Vue({
         el: '#panierapp',
-        delimeters: ['[[',']]'],
+        delimiters: ['[[',']]'],
         data () {
             return {
-
+                produits: [{{ produitstring | safe }}]
             }
         },
-        mounted() {
-            console.log('Mounted');
-        },
         methods: {
+            incrementQuantite(produit_id, quantite){
+                console.log('Produit_id:', produit_id);
+
+                var data = {
+                    'produit_id': produit_id, 
+                    'update': true,
+                    'quantite': parseInt(quantite) + 1
+                };
+
+                fetch('/api/ajouter_au_panier/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type' : 'application/json',
+                        'X-CSRFToken' : '{{ csrf_token }}'
+                    },
+                    credentials: 'same-origin',
+                    body: JSON.stringify(data)
+                })
+                .then((response) => {
+                    console.log(response)
+                    
+                    for (var i = 0; i < this.produits.length; i++){
+                        var produit = this.produits[i];
+                        
+                        if  (produit.id === produit_id) { 
+                            this.produits[i].quantite = parseInt(this.produits[i].quantite) + 1;   /* Update la quantité en direct */
+                            this.produits[i].prix_total = parseInt(this.produits[i].quantite) * parseFloat(this.produits[i].prix); /* Update le prix total en direct*/
+                        }
+                    }
+
+                })
+                .catch(function (error){
+                    console.log('Error 2');
+                })
+            },
             retirerDuPanier(produit_id){
                 console.log('Produit_id:', produit_id);
 
@@ -69,6 +97,8 @@
                 })
                 .then((response) => {
                     console.log(response)
+
+                    this.produits = this.produits.filter(produit => produit.id !== produit_id)
                 })
                 .catch(function (error){
                     console.log('Error 2');
