@@ -192,6 +192,8 @@
                     'quantite': parseInt(quantite) - 1
                 };
 
+                if (parseInt(quantite))
+
                 store.commit('increment', -1);
                 store.commit('changePrixTotal', -parseFloat(prix));
 
