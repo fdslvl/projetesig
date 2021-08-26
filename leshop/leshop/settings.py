@@ -28,6 +28,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+LOGIN_URL = 'connexion'
+LOGIN_REDIRECT_URL = 'panier'
+LOGOUT_REDIRECT_URL = 'homepage'
+
 # Panier
 
 SESSION_COOKIE_AGE = 86400 #Quand un produit est ajouté à mon panier il y restera cette durée en secondes (24h)

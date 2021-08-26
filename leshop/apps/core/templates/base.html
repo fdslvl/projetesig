@@ -50,7 +50,12 @@
                             <a href="{% url 'deconnexion' %}" class="button is-danger"> Se déconnecter </a>
                         </div>
                      {% else %}
-
+                        <div class="navbar-item" >
+                            <div class="buttons">
+                                <a href="{% url 'inscription' %}" class="button is-primary"><strong>S'inscrire</strong></a>
+                                <a href="{% url 'connexion' %}" class="button is-light"><strong>Se connecter</strong></a>
+                            </div>
+                        </div>
                     {% endif %}
                 </div>
             </div>
