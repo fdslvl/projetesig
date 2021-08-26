@@ -38,6 +38,7 @@ urlpatterns = [
     # Authentification
 
     path('inscription/', inscription, name='inscription'),
+    path('connexion/', views.LoginView.as_view(template_name='connexion.html'), name='connexion'),
     path('deconnexion/', views.LogoutView.as_view(), name='deconnexion'),
 
     # API
