@@ -21,3 +21,7 @@ def inscription(request):
         form = FormulaireInscription()
 
     return render(request, 'inscription.html', {'form': form})
+
+@login_required
+def moncompte(request):
+    return render(request, 'moncompte.html')

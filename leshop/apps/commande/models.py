@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 from apps.store.models import Produit
 
@@ -14,6 +15,10 @@ class Commande(models.Model):
         (LIVRE, 'Livré'),
         (ARRIVE, 'Arrivé')
     )
+
+    user = models.ForeignKey(User, related_name='commandes', on_delete=models.SET_NULL, blank=True, null=True)
+
+
 
     prenom = models.CharField(max_length=100)
     nom = models.CharField(max_length=100)
@@ -32,6 +37,9 @@ class Commande(models.Model):
 
     def __str__(self):
         return '%s' % self.prenom
+
+    def get_total_quantite(self):
+        return sum(int(item.quantite) for item in self.items.all())
 
 class CommandeItem(models.Model):
     commande = models.ForeignKey(Commande, related_name='items', on_delete=models.CASCADE)

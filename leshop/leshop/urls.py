@@ -23,7 +23,7 @@ from django.contrib.auth import views
 from apps.panier.views import panier_detail
 from apps.core.views import homepage, contact, apropos
 from apps.store.views import produit_detail, categorie_detail, search
-from apps.userprofile.views import inscription
+from apps.userprofile.views import inscription, moncompte
 
 from apps.store.api import api_ajouter_au_panier, api_retirer_du_panier, api_payer
 
@@ -37,6 +37,7 @@ urlpatterns = [
 
     # Authentification
 
+    path('moncompte/', moncompte, name='moncompte'),
     path('inscription/', inscription, name='inscription'),
     path('connexion/', views.LoginView.as_view(template_name='connexion.html'), name='connexion'),
     path('deconnexion/', views.LogoutView.as_view(), name='deconnexion'),

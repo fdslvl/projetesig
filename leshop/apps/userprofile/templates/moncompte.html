@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1 class="title">Mon compte</h1>
+
+    <a href="{% url 'deconnexion' %" class="button is-danger"> Se déconnecter </a>
+
+    <hr>
+
+    <h2 class="subtitle">Informations du compte</h2>
+
+    <p><strong>Nom:</strong>{{ request.user.get_full_name }}</p>
+    <p><strong>Email:</strong>{{ request.user.email }}</p>
+
+    <hr>
+
+    <h2 class="subtitle"> Mes commandes </h2>
+
+    {% for commande in request.commandes.all %}
+        <article class="message is-light">
+            <div class="message-header">
+                <p>{{ commande.cree_le }}</p>
+                <p><strong>Statut :</strong>{{ commande.statut }}</p>
+            </div>
+
+            <div class="message-body">
+                <table class="table is-striped is-fullwidth">
+                    <thead>
+                        <th>
+                            <th>Nom</th>
+                            <th>Quantité</th>
+                            <th>Prix</th>
+                        </th>
+                    </thead>
+                    <tbody>
+                        {% for item in commande.items.all %}
+                            <tr>
+                                <td>{{ item.produit.nom }}</td>
+                                <td>{{ item.quantite }}</td>
+                                <td>{{ item.prix }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td>Total</td>
+                            <td>{{ commande.get_total_quantite }}</td>
+                            <td>{{ commande.montant_paye }}</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </article>
+    {% empty %}
+        <p>Vous n'avez encore rien commandé.</p>
+    {% endfor %}
+{% endblock %}
