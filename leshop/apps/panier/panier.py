@@ -61,4 +61,7 @@ class Panier(object):
         return sum(int(item['quantite']) for item in self.panier.values())
 
     def get_prix_total(self):
-        return sum(float(item['prix_total']) for item in self)
+        if "prix_total" in self.panier.values():
+            return sum(float(item['prix_total']) for item in self)
+        else:
+            return 0

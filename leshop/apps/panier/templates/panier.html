@@ -7,84 +7,86 @@
         <h1 class="title">Panier</h1>
 
         {% if panier %}
-        <div class="table">
-            <table class="table">
-                <thead>
-                    <th>Produit</th>
-                    <th>Quantité</th>
-                    <th>Prix</th>
-                    <th></th>
-                </thead>
+        <div v-if="produits.length > 0">
+            <div class="table" >
+                <table class="table">
+                    <thead>
+                        <th>Produit</th>
+                        <th>Quantité</th>
+                        <th>Prix</th>
+                        <th></th>
+                    </thead>
 
-                <tbody>
-                    <tr v-for="produit in produits">
-                        <td>[[ produit.nom ]]</td>
-                        <td><button @click="decrementQuantite(produit.id, produit.quantite, produit.prix)">-</button>[[ produit.quantite ]] <button @click="incrementQuantite(produit.id, produit.quantite,  produit.prix)">+</button></td>
-                        <td> [[ produit.prix_total ]]</td>
-                        <td><button @click="retirerDuPanier(produit.id)">Supprimer du panier</button></td>
-                    </tr>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td>Coût total:</td>
-                        <td>[[ numItems ]]</td>
-                        <td></td>
-                        <td>[[ prixTotal ]]</td>
-                    </tr>
-                </tfoot>
-            </table>
+                    <tbody>
+                        <tr v-for="produit in produits">
+                            <td>[[ produit.nom ]]</td>
+                            <td><button @click="decrementQuantite(produit.id, produit.quantite, produit.prix)">-</button>[[ produit.quantite ]] <button @click="incrementQuantite(produit.id, produit.quantite,  produit.prix)">+</button></td>
+                            <td> [[ produit.prix_total ]]</td>
+                            <td><button @click="retirerDuPanier(produit.id)">Supprimer du panier</button></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td>Coût total:</td>
+                            <td>[[ numItems ]]</td>
+                            <td></td>
+                            <td>[[ prixTotal ]]</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <form v-on:submit.prevent="submitForm()">
+                <div class="field">
+                    <div cass="control">
+                        <label>Prénom</label>
+                        <input type="text" name="prenom" v-model="prenom">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div cass="control">
+                        <label>Nom</label>
+                        <input type="text" name="nom" v-model="nom">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div cass="control">
+                        <label>Email</label>
+                        <input type="text" name="email" v-model="email">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div cass="control">
+                        <label>Adresse</label>
+                        <input type="text" name="adresse" v-model="adresse">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div cass="control">
+                        <label>Code Postal</label>
+                        <input type="text" name="npa" v-model="npa">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div cass="control">
+                        <label>Localité</label>
+                        <input type="text" name="localite" v-model="localite">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div class="control">
+                        <button class="button is-primary">Payer</button>
+                    </div>
+                </div>
+            </form>
         </div>
-
-        <form v-on:submit.prevent="submitForm()">
-            <div class="field">
-                <div cass="control">
-                    <label>Prénom</label>
-                    <input type="text" name="prenom" v-model="prenom">
-                </div>
-            </div>
-
-            <div class="field">
-                <div cass="control">
-                    <label>Nom</label>
-                    <input type="text" name="nom" v-model="nom">
-                </div>
-            </div>
-
-            <div class="field">
-                <div cass="control">
-                    <label>Email</label>
-                    <input type="text" name="email" v-model="email">
-                </div>
-            </div>
-
-            <div class="field">
-                <div cass="control">
-                    <label>Adresse</label>
-                    <input type="text" name="adresse" v-model="adresse">
-                </div>
-            </div>
-
-            <div class="field">
-                <div cass="control">
-                    <label>Code Postal</label>
-                    <input type="text" name="npa" v-model="npa">
-                </div>
-            </div>
-
-            <div class="field">
-                <div cass="control">
-                    <label>Localité</label>
-                    <input type="text" name="localite" v-model="localite">
-                </div>
-            </div>
-
-            <div class="field">
-                <div class="control">
-                    <button class="button is-primary">Payer</button>
-                </div>
-            </div>
-        </form>
-            
+        <p v-else >Votre panier est vide.</p>
         {% else %}
             <p>Votre panier est vide.</p>
         {% endif %}
@@ -140,6 +142,8 @@
                 .then((response) => {
                     console.log('Success');
                     console.log(response);
+
+                    window.location.href = '/';
                 })
                 .catch(function (error){
                     console.log('Error 2');
@@ -192,41 +196,42 @@
                     'quantite': parseInt(quantite) - 1
                 };
 
-                store.commit('increment', -1);
-                store.commit('changePrixTotal', -parseFloat(prix));
-
-                if (parseInt(quantite) === 0) {
+                if (parseInt(quantite) -1 === 0) {
                     this.retirerDuPanier(produit_id);
-                } else {}
+                } else {
 
-                fetch('/api/ajouter_au_panier/', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type' : 'application/json',
-                        'X-CSRFToken' : '{{ csrf_token }}'
-                    },
-                    credentials: 'same-origin',
-                    body: JSON.stringify(data)
-                })
-                .then((response) => {
-                    console.log(response)
-                    
-                    for (var i = 0; i < this.produits.length; i++){
-                        var produit = this.produits[i];
+                    store.commit('increment', -1);
+                    store.commit('changePrixTotal', -parseFloat(prix));
+
+                    fetch('/api/ajouter_au_panier/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type' : 'application/json',
+                            'X-CSRFToken' : '{{ csrf_token }}'
+                        },
+                        credentials: 'same-origin',
+                        body: JSON.stringify(data)
+                    })
+                    .then((response) => {
+                        console.log(response)
                         
-                        if  (produit.id === produit_id) { 
-                            this.produits[i].quantite = parseInt(this.produits[i].quantite) - 1;   /* Update la quantité en direct */
-                            this.produits[i].prix_total = parseInt(this.produits[i].quantite) * parseFloat(this.produits[i].prix); /* Update le prix total en direct*/
+                        for (var i = 0; i < this.produits.length; i++){
+                            var produit = this.produits[i];
+                            
+                            if  (produit.id === produit_id) { 
+                                this.produits[i].quantite = parseInt(this.produits[i].quantite) - 1;   /* Update la quantité en direct */
+                                this.produits[i].prix_total = parseInt(this.produits[i].quantite) * parseFloat(this.produits[i].prix); /* Update le prix total en direct*/
+                            }
                         }
-                    }
 
-                })
-                .catch(function (error){
-                    console.log('Error 2');
-                })
+                    })
+                    .catch(function (error){
+                        console.log('Error 2');
+                    })
+                }
             },
             retirerDuPanier(produit_id){
-                console.log('Produit_id:', produit_id);
+                console.log('Retirer produit_id:', produit_id);
 
                 var data = {
                     'produit_id': produit_id

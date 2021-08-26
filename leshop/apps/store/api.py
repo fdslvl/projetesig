@@ -35,7 +35,7 @@ def api_payer(request):
 
         panier.clear()
 
-    return redirect('/') #Redirige le client à la page d'accueil
+    return JsonResponse(jsonresponse)
 
 def api_ajouter_au_panier(request):
     data = json.loads(request.body)
