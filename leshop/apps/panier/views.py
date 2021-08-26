@@ -10,7 +10,8 @@ def panier_detail(request):
 
     for item in panier:
         produit = item['produit']
-        b = "{'id': '%s', 'nom': '%s', 'prix': '%s', 'quantite': '%s', 'prix_total' : '%s'}," % (produit.id, produit.nom, produit.prix, item['quantite'], item['prix_total'])
+        url = '/%s/%s/' % (produit.categorie.slug, produit.slug)
+        b = "{'id': '%s', 'nom': '%s', 'prix': '%s', 'quantite': '%s', 'prix_total' : '%s', 'thumbnail': '%s', 'url': '%s'}," % (produit.id, produit.nom, produit.prix, item['quantite'], item['prix_total'], produit.thumbnail.url, url)
 
         produitstring = produitstring + b
 

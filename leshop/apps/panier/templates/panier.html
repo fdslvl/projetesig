@@ -11,6 +11,7 @@
             <div class="table" >
                 <table class="table">
                     <thead>
+                        <th></th>
                         <th>Produit</th>
                         <th>Quantité</th>
                         <th>Prix</th>
@@ -19,7 +20,16 @@
 
                     <tbody>
                         <tr v-for="produit in produits">
-                            <td>[[ produit.nom ]]</td>
+                            <td>
+                                <figure class="image is 10x10">
+                                    <img :src ="produit.thumbnail">
+                                </figure>
+                            </td>
+                            <td>
+                                <a :href="produit.url">
+                                    [[ produit.nom ]]
+                                </a>
+                            </td>
                             <td><button @click="decrementQuantite(produit.id, produit.quantite, produit.prix)">-</button>[[ produit.quantite ]] <button @click="incrementQuantite(produit.id, produit.quantite,  produit.prix)">+</button></td>
                             <td> [[ produit.prix_total ]]</td>
                             <td><button @click="retirerDuPanier(produit.id)">Supprimer du panier</button></td>
