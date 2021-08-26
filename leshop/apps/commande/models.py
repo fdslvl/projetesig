@@ -5,6 +5,16 @@ from apps.store.models import Produit
 # Create your models here.
 
 class Commande(models.Model):
+    EST_COMMANDE = 'commande'
+    LIVRE = 'livre'
+    ARRIVE = 'arrive'
+
+    CHOIX_STATUT = (
+        (EST_COMMANDE, 'Commandé'),
+        (LIVRE, 'Livré'),
+        (ARRIVE, 'Arrivé')
+    )
+
     prenom = models.CharField(max_length=100)
     nom = models.CharField(max_length=100)
     email = models.CharField(max_length=100)
@@ -16,6 +26,9 @@ class Commande(models.Model):
 
     paye = models.BooleanField(default=False)
     montant_paye = models.FloatField(blank=True, null=True)
+
+    date_livraison = models.DateTimeField(blank=True, null=True)
+    statut = models.CharField(max_length=20, choices=CHOIX_STATUT, default=EST_COMMANDE)
 
     def __str__(self):
         return '%s' % self.prenom
