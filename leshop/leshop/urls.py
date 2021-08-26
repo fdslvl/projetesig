@@ -18,10 +18,12 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth import views
 
 from apps.panier.views import panier_detail
 from apps.core.views import homepage, contact, apropos
 from apps.store.views import produit_detail, categorie_detail, search
+from apps.userprofile.views import inscription
 
 from apps.store.api import api_ajouter_au_panier, api_retirer_du_panier, api_payer
 
@@ -32,6 +34,11 @@ urlpatterns = [
     path('contact/', contact, name='contact'),
     path('apropos/', apropos, name='apropos'),
     path('admin/', admin.site.urls),
+
+    # Authentification
+
+    path('inscription/', inscription, name='inscription'),
+    path('deconnexion/', views.LogoutView.as_view(), name='deconnexion'),
 
     # API
 

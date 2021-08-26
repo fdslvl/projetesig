@@ -44,6 +44,14 @@
                     <div class="navbar-item" >
                     <a href="{% url 'panier' %}" class ="button is-primary">Panier ([[ numItems ]])</a>
                     </div>
+
+                    {% if request.user.is_authenticated %}
+                        <div class="navbar-item" >
+                            <a href="{% url 'deconnexion' %}" class="button is-danger"> Se déconnecter </a>
+                        </div>
+                     {% else %}
+
+                    {% endif %}
                 </div>
             </div>
         </nav>
