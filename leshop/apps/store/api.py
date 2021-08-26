@@ -4,11 +4,13 @@ from django.shortcuts import get_object_or_404, redirect
 
 from apps.panier.panier import Panier
 
-from .models import Produit
 from apps.commande.utils import payer
 
+from .models import Produit
 
 from apps.commande.models import Commande, CommandeItem
+
+
 
 def api_payer(request):
     panier = Panier(request)

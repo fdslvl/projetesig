@@ -3,7 +3,7 @@ import os
 
 from random import randint
 
-from apps.panier import panier
+from apps.panier.panier import Panier
 
 from apps.commande.models import Commande, CommandeItem
 

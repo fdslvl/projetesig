@@ -35,7 +35,7 @@
             </table>
         </div>
 
-        <from v-on:submit.prevent="submitForm()">
+        <form v-on:submit.prevent="submitForm()">
             <div class="field">
                 <div cass="control">
                     <label>Prénom</label>
@@ -83,7 +83,7 @@
                     <button class="button is-primary">Payer</button>
                 </div>
             </div>
-        </from>
+        </form>
             
         {% else %}
             <p>Votre panier est vide.</p>
@@ -192,10 +192,12 @@
                     'quantite': parseInt(quantite) - 1
                 };
 
-                if (parseInt(quantite))
-
                 store.commit('increment', -1);
                 store.commit('changePrixTotal', -parseFloat(prix));
+
+                if (parseInt(quantite) === 0) {
+                    this.retirerDuPanier(produit_id);
+                } else {}
 
                 fetch('/api/ajouter_au_panier/', {
                     method: 'POST',
