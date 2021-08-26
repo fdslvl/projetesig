@@ -58,7 +58,7 @@
             var store = new Vuex.Store({
                 state: {
                     numItems: {{ panier.get_total_length }},
-                    prixTotal: {{ panier.get_total_cost }}
+                    prixTotal: {{ panier.get_prix_total }}
                 },
                 mutations: {
                     increment(state, quantite) {
