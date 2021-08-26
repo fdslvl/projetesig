@@ -26,8 +26,8 @@ class Produit(models.Model):
     vedette = models.BooleanField(default=False) # Attribut qui permet de définir quel produit est vedette et sera placé en homepage
     date_added = models.DateTimeField(auto_now_add=True) #Trie le produit par date lorsqu'il est ajouté
   
-    image = models.ImageField(upload_to='media/uploads/',blank=True, null = True)
-    thumbnail = models.ImageField(upload_to='media/uploads/',blank=True, null=True)
+    image = models.ImageField(upload_to='uploads/',blank=True, null = True)
+    thumbnail = models.ImageField(upload_to='uploads/',blank=True, null=True)
 
     class Meta:
         ordering = ('-date_added',) # Ici le '-' nous sert à trier de la date la plus récente
