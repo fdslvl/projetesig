@@ -1,0 +1,9 @@
+form .helptext {
+    font-size: 12px;
+    font-style: italic;
+    color: #ccc;
+}
+
+form ul {
+    display: none;
+}

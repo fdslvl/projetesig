@@ -1,17 +1,40 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1 class="title">Connexion</h1>
+<div class="columns">
+    <div class="column is-4 is-offset-4">
+        <h1 class="title">Connexion</h1>
 
-    <form method="post" action=".">
-        {% csrf_token %}
+        <form method="post" action=".">
+            {% csrf_token %}
 
-        {{ form.as_p }}
-
-        <div class="field">
-            <div class="control">
-                <button class="button is-success"> Se connecter </button>
+            <div class="field">
+                <label>Pseudo</label>
+                <div class="control">
+                    <input type="text" class="input" name="username" id="id_username">
+                </div>
             </div>
-        </div>
-    </form>
+
+            <div class="field">
+                <label>Mot de passe</label>
+                <div class="control">
+                    <input type="password" class="input" name="password" id="id_password">
+                </div>
+            </div>
+
+            {% if form.errors %}
+                <div class="notification is-danger">
+                    Votre pseudo et mot de passe ne correspondent pas, veuillez réessayer svp.
+                </div>
+            {% endif %}
+
+            <div class="field">
+                <div class="control">
+                    <button class="button is-success"> Se connecter </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+    
 {% endblock%}
