@@ -13,6 +13,8 @@
             <p>{{ produit.description }}</p>
         {% endif %}
 
+        <hr>
+
         <button @click ="ajouterAuPanier({{produit.id}})">Ajouter au panier</button>
 
         <article class="message is-success" v-if="showMessage">
