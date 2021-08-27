@@ -2,37 +2,9 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
-from .models import Userprofile
-
-class UserprofileForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super(UserprofileForm, self).__init__(*args, **kwargs)
-        
-        self.fields['adresse'].widget.attrs['class'] = 'input'
-        self.fields['NPA'].widget.attrs['class'] = 'input'
-        self.fields['localite'].widget.attrs['class'] = 'input'
-        self.fields['telephone'].widget.attrs['class'] = 'input'
-
-    class Meta:
-        model = Userprofile
-        fields = '__all__'
-        exclude = ('user',)
-
 class FormulaireInscription(UserCreationForm):
-    prenom = forms.CharField(max_length=50, required=True)
-    nom = forms.CharField(max_length=50, required=True)
-    email= forms.EmailField(max_length=255, required=True)
+    class Meta:
+        model = User
+        fields = ['username', 'first_name','last_name','email', 'password1', 'password2']
 
-    def __init__(self, *args, **kwargs):
-        super(FormulaireInscription, self).__init__(*args, **kwargs)
-
-        self.fields['username'].widget.attrs['class'] = 'input'
-        self.fields['email'].widget.attrs['class'] = 'input'
-        self.fields['password1'].widget.attrs['class'] = 'input'
-        self.fields['password2'].widget.attrs['class'] = 'input'
-        self.fields['prenom'].widget.attrs['class'] = 'input'
-        self.fields['nom'].widget.attrs['class'] = 'input'
-
-class Meta:
-    model = User
-    fields = ['username', 'prenom', 'nom', 'email', 'password1', 'password2']
+        labels = {'username' : 'Pseudo', 'first_name' : 'Prénom','last_name': 'Nom','email': 'Email', 'password1': 'Mot de passe', 'password2': 'Confirmation du mot de passe'}

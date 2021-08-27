@@ -9,8 +9,8 @@
 
     <h2 class="subtitle">Informations du compte</h2>
 
-    <p><strong>Nom:</strong>{{ request.user.get_full_name}}</p>
-    <p><strong>Email:</strong>{{ request.user.email }}</p>
+    <p><strong>Nom: &nbsp;</strong>{{ request.user.first_name }}</p>
+    <p><strong>Email: &nbsp;</strong>{{ request.user.email }}</p> 
 
     <hr>
 
