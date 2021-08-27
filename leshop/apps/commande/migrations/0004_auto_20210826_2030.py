@@ -11,13 +11,13 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name='commande',
+            model_name='commandé',
             name='date_livraison',
             field=models.DateTimeField(blank=True, null=True),
         ),
         migrations.AddField(
-            model_name='commande',
+            model_name='commandé',
             name='statut',
-            field=models.CharField(choices=[('commande', 'Commandé'), ('livre', 'Livré'), ('arrive', 'Arrivé')], default='commande', max_length=20),
+            field=models.CharField(choices=[('commande', 'Commandé'), ('livré', 'Livré'), ('arrivé', 'Arrivé')], default='commandé', max_length=20),
         ),
     ]
