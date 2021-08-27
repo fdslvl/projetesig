@@ -46,61 +46,68 @@
                 </table>
             </div>
 
-            <h2 class="title">Informations personnelles</h2>
+            <hr>
 
-            <div class="columns">
-                <div class="column is-6 ">
-                    <div class="field">
-                        <label>Prénom</label>
-                        <div cass="control">                               
-                            <input type="text" name="prenom" v-model="prenom">
+            <h1 class="title">Informations de livraison</h1>
+
+            <hr>
+
+            <form v-on:submit.prevent="submitForm()">
+                <div class="columns">
+                    <div class="column is-2">
+                        <div class="field">
+                            <label>Prénom</label>
+                            <div cass="control">
+                                <input type="text" name="prenom" v-model="prenom">
+                            </div>
+                        </div>
+        
+                        <div class="field">
+                            <label>Nom</label>
+                            <div cass="control">
+                                <input type="text" name="nom" v-model="nom">
+                            </div>
+                        </div>
+        
+                        <div class="field">
+                            <label>Email</label>
+                            <div cass="control">
+                                <input type="text" name="email" v-model="email">
+                            </div>
                         </div>
                     </div>
-    
-                    <div class="field">
-                        <label>Nom</label>
-                        <div cass="control">
-                            <input type="text" name="nom" v-model="nom">
+                    <div class="column is-3">
+                        <div class="field">
+                            <label>Adresse</label>
+                            <div cass="control">
+                                <input type="text" name="adresse" v-model="adresse">
+                            </div>
                         </div>
-                    </div>
-    
-                    <div class="field">
-                        <label>Email</label>
-                        <div cass="control">
-                            <input type="text" name="email" v-model="email">
+        
+                        <div class="field">
+                            <label>Code Postal</label>
+                            <div cass="control">
+                                <input type="text" name="npa" v-model="npa">
+                            </div>
+                        </div>
+        
+                        <div class="field">
+                            <label>Localité</label>
+                            <div cass="control">
+                                <input type="text" name="localite" v-model="localite">
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="column is-6">
-                    <div class="field">
-                        <label>Adresse</label>
-                        <div cass="control">
-                            <input type="text" name="adresse" v-model="adresse">
-                        </div>
-                    </div>
-    
-                    <div class="field">
-                        <label>Code Postal</label>
-                        <div cass="control">
-                            <input type="text" name="npa" v-model="npa">
-                        </div>
-                    </div>
-    
-                    <div class="field">
-                        <label>Localité</label>
-                        <div cass="control">
-                            <input type="text" name="localite" v-model="localite">
-                        </div>
+                <hr>
+
+                <div class="field">
+                    <div class="control">
+                        <button class="button is-primary">Payer</button>
                     </div>
                 </div>
-            </div>
-    
-             <div class="field">
-                <div class="control">
-                     <button class="button is-primary">Payer</button>
-                </div>
-            </div>
+            </form>
         </div>
         <p v-else >Votre panier est vide.</p>
         {% else %}

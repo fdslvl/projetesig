@@ -9,14 +9,14 @@
 
     <h2 class="subtitle">Informations du compte</h2>
 
-    <p><strong>Nom:</strong>{{ request.user.get_full_name }}</p>
+    <p><strong>Nom:</strong>{{ request.user.get_full_name}}</p>
     <p><strong>Email:</strong>{{ request.user.email }}</p>
 
     <hr>
 
     <h2 class="subtitle"> Mes commandes </h2>
 
-    {% for commande in request.commandes.all %}
+    {% for commande in request.user.commandes.all %}
         <article class="message is-light">
             <div class="message-header">
                 <p>{{ commande.cree_le }}</p>
@@ -26,11 +26,11 @@
             <div class="message-body">
                 <table class="table is-striped is-fullwidth">
                     <thead>
-                        <th>
+                        <tr>
                             <th>Nom</th>
                             <th>Quantité</th>
                             <th>Prix</th>
-                        </th>
+                        </tr>
                     </thead>
                     <tbody>
                         {% for item in commande.items.all %}

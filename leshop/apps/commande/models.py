@@ -6,9 +6,9 @@ from apps.store.models import Produit
 # Create your models here.
 
 class Commande(models.Model):
-    EST_COMMANDE = 'commande'
-    LIVRE = 'livre'
-    ARRIVE = 'arrive'
+    EST_COMMANDE = 'commandé'
+    LIVRE = 'livré'
+    ARRIVE = 'arrivé'
 
     CHOIX_STATUT = (
         (EST_COMMANDE, 'Commandé'),
@@ -17,8 +17,6 @@ class Commande(models.Model):
     )
 
     user = models.ForeignKey(User, related_name='commandes', on_delete=models.SET_NULL, blank=True, null=True)
-
-
 
     prenom = models.CharField(max_length=100)
     nom = models.CharField(max_length=100)

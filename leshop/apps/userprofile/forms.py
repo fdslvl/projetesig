@@ -2,6 +2,22 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
+from .models import Userprofile
+
+class UserprofileForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(UserprofileForm, self).__init__(*args, **kwargs)
+        
+        self.fields['adresse'].widget.attrs['class'] = 'input'
+        self.fields['NPA'].widget.attrs['class'] = 'input'
+        self.fields['localite'].widget.attrs['class'] = 'input'
+        self.fields['telephone'].widget.attrs['class'] = 'input'
+
+    class Meta:
+        model = Userprofile
+        fields = '__all__'
+        exclude = ('user',)
+
 class FormulaireInscription(UserCreationForm):
     prenom = forms.CharField(max_length=50, required=True)
     nom = forms.CharField(max_length=50, required=True)
@@ -19,4 +35,4 @@ class FormulaireInscription(UserCreationForm):
 
 class Meta:
     model = User
-    fields = ['username', 'pernom', 'nom', 'email', 'password1', 'password2']
+    fields = ['username', 'prenom', 'nom', 'email', 'password1', 'password2']

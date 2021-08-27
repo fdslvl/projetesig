@@ -2,25 +2,31 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 
-from .forms import FormulaireInscription
+from .forms import FormulaireInscription, UserprofileForm
 
 # Create your views here.
 
 def inscription(request):
     if request.method == 'POST':
-        form = FormulaireInscription(request.POST)
+        formulaireinscription = FormulaireInscription(request.POST)
+        userprofileform = UserprofileForm(request.POST)
         
-        if form.is_valid():
-            user = form.save()
+        if formulaireinscription.is_valid() and userprofileform.is_valid():
+            user = formulaireinscription.save()
+
+            userprofile = userprofileform.save(commit=False)
+            userprofile.user = user
+            userprofile.save()
 
             login(request, user)
 
             return redirect('homepage')
 
     else:
-        form = FormulaireInscription()
+        formulaireinscription = FormulaireInscription()
+        userprofileform = UserprofileForm()
 
-    return render(request, 'inscription.html', {'form': form})
+    return render(request, 'inscription.html', {'formulaireinscription': formulaireinscription, 'userprofileform': userprofileform})
 
 @login_required
 def moncompte(request):
